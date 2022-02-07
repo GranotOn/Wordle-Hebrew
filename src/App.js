@@ -1,24 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import Theme from "./Components/Theme";
+import Modal from "./Components/Modal";
+import ModalOverlay from "./Components/ModalOverlay";
+import MainGame from "./Components/MainGame";
+
+import { useState } from "react";
+
+const DARK_MODE = true;
 
 function App() {
+  const [isModal, setIsModal] = useState(true);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Theme darkMode={DARK_MODE}>
+      {isModal && <Modal setIsModal={setIsModal} />}
+      <ModalOverlay isModal={isModal}>
+        <MainGame />
+      </ModalOverlay>
+    </Theme>
   );
 }
 
