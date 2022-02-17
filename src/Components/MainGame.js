@@ -2,37 +2,38 @@ import GameHeader from "./GameHeader";
 import GameGuessWindow from "./GameGuessWindow";
 import GameKeyboard from "./GameKeyboard";
 import { useState } from "react";
+import { useStore } from "../store";
 
 export default function MainGame() {
-  const word = "שולחן";
+  const word = useStore((state) => state.word);
   const [gameRunning, setGameRunning] = useState(true);
   const [keyboardMap, setKeyboardMap] = useState({
-    א: "wrong",
-    ב: "wrong",
-    ג: "wrong",
-    ד: "wrong",
-    ה: "wrong",
-    ו: "wrong",
-    ז: "wrong",
-    ח: "wrong",
-    ט: "wrong",
-    י: "wrong",
-    כ: "wrong",
-    ל: "wrong",
-    מ: "wrong",
-    נ: "wrong",
-    ס: "wrong",
-    ע: "wrong",
-    פ: "wrong",
-    צ: "wrong",
-    ק: "wrong",
-    ר: "wrong",
-    ש: "wrong",
-    ת: "wrong",
-    ם: "wrong",
-    ן: "wrong",
-    ף: "wrong",
-    ץ: "wrong",
+    א: "not attempted",
+    ב: "not attempted",
+    ג: "not attempted",
+    ד: "not attempted",
+    ה: "not attempted",
+    ו: "not attempted",
+    ז: "not attempted",
+    ח: "not attempted",
+    ט: "not attempted",
+    י: "not attempted",
+    כ: "not attempted",
+    ל: "not attempted",
+    מ: "not attempted",
+    נ: "not attempted",
+    ס: "not attempted",
+    ע: "not attempted",
+    פ: "not attempted",
+    צ: "not attempted",
+    ק: "not attempted",
+    ר: "not attempted",
+    ש: "not attempted",
+    ת: "not attempted",
+    ם: "not attempted",
+    ן: "not attempted",
+    ף: "not attempted",
+    ץ: "not attempted",
   });
 
   function handleGuessEvent(guess) {
@@ -56,7 +57,7 @@ export default function MainGame() {
           guessCharacterPlaceRepresentation[charIndexInGuess] === "wrong place"
         )
           newKeyboardMap[char] = "wrong place";
-        else newKeyboardMap[char] = formerKeyboardMap[char];
+        else newKeyboardMap[char] = "wrong";
       });
       return newKeyboardMap;
     });

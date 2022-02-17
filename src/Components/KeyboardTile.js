@@ -2,7 +2,8 @@ export default function KeyboardTile({ keyName, status }) {
   const statusToBackgroundSwitch = {
     correct: "bg-green-600",
     "wrong place": "bg-yellow-600",
-    wrong: "bg-gray-600",
+    "not attempted": "bg-gray-600",
+    wrong: "bg-gray-800",
   };
   const backgroundColor = statusToBackgroundSwitch[status];
 

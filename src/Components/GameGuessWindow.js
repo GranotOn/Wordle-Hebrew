@@ -1,6 +1,8 @@
 import { useCallback } from "react";
 import { useEffect, useState } from "react/cjs/react.development";
 import Word from "./Word";
+import { isWord } from "../utils/wordManager";
+import { useStore } from "../store";
 
 const NUM_GUESSES = 6;
 const NUM_CHARACTERS = 5;
@@ -19,10 +21,14 @@ export default function GameGuessWindow({
     Array(NUM_GUESSES).fill(Array(NUM_CHARACTERS).fill(""))
   );
   const [currentGuessingWord, setCurrentGuessingWord] = useState(0);
+  const popup = useStore((state) => state.popup);
+  const togglePopup = useStore((state) => state.togglePopup);
+  const setPopupMessage = useStore((state) => state.setPopupMessage);
 
   const handleGuess = useCallback(
     (guess) => {
       handleGuessEvent(guess);
+      console.log(word);
       if (guess === word)
         handleGameFinishsedEvent(true, currentGuessingWord + 1);
       else if (currentGuessingWord === NUM_GUESSES - 1)
@@ -39,7 +45,18 @@ export default function GameGuessWindow({
       if (key === "Enter") {
         if (guess.length !== NUM_CHARACTERS) {
           console.log("Guess too short");
-          // TODO:: Let user know he needs a full word
+          if (!popup) {
+            setPopupMessage("מילה חוקית חייבת להיות באורך 6 אותיות");
+            togglePopup();
+          }
+          return;
+        }
+        if (!isWord(guess)) {
+          console.log("Not a word");
+          if (!popup) {
+            setPopupMessage("המילה לא נמצאת ברשימת המילים החוקיות");
+            togglePopup();
+          }
           return;
         }
         setGuessArray((formerGuessArray) =>
